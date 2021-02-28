@@ -1,0 +1,19 @@
+{
+  "name": "ghtagadder",
+  "version": "1.0.0",
+  "description": "add tags based on user to your gh repo",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "npx nodemon index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^18.3.0",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
