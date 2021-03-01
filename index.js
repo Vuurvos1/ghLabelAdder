@@ -16,7 +16,7 @@ const octokit = new Octokit({
   auth: process.env.GIT_OATH,
 });
 
-// main();
+main();
 
 async function main() {
   const issues = await octokit.issues.listForRepo({
@@ -26,23 +26,25 @@ async function main() {
 
   for (const issue of issues.data) {
     const label = roleAssignments[issue.user.login];
-    let labelFound = false;
+    if (label) {
+      let labelFound = false;
 
-    for (const _label of issue.labels) {
-      if (_label.name == label) {
-        labelFound = true;
-        break;
+      for (const _label of issue.labels) {
+        if (_label.name == label) {
+          labelFound = true;
+          break;
+        }
       }
-    }
 
-    // no matching label was found -> add label
-    if (!labelFound) {
-      await octokit.issues.addLabels({
-        owner: REPO_OWNER,
-        repo: REPO,
-        issue_number: issue.number,
-        labels: [label],
-      });
+      // no matching label was found -> add label
+      if (!labelFound) {
+        await octokit.issues.addLabels({
+          owner: REPO_OWNER,
+          repo: REPO,
+          issue_number: issue.number,
+          labels: [label],
+        });
+      }
     }
   }
 }
